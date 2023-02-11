@@ -16,7 +16,7 @@
                   <div class="m-auto text-center">
                     <Lottie v-if="osThemeRef === 'dark'" :loop="false" name="lae-jump"/>
                     <Lottie v-else :loop="false" name="lae-jump-black"/>
-                    <n-h3>莱云</n-h3>
+                    <n-h3>联合映射</n-h3>
                   </div>
                 </div>
               </div>
