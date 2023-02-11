@@ -9,18 +9,7 @@ const modules = [
         name: "PortIO",
         route: "modules.tunnels.index",
         icon: CloudOutline
-    },
-    {
-        id: "gct",
-        name: "游戏容器",
-        route: "modules.gct.index",
-        icon: GameControllerOutline
-    },
-    // {
-    //     id: "user-mqtt",
-    //     name: "消息队列",
-    //     route: "modules.user-mqtt"
-    // }
+    }
 ]
 
 for (let i = 0; i < modules.length; i++) {
