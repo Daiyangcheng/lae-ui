@@ -15,7 +15,7 @@ import router from '../plugins/router'
 
 function login() {
   router.push({
-    name: 'auth.login'
+    name: 'auth.login-locyan'
   })
 }
 

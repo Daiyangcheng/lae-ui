@@ -2,21 +2,14 @@
   <div>
     <n-h1 prefix="bar">
       <n-text type="primary">
-        欢迎使用 ME Frp
+        创建隧道
       </n-text>
     </n-h1>
     <n-p>我们将引导您创建隧道。</n-p>
 
     <n-card>
-      <n-tabs
-          v-model:value="tab"
-          animated
-          class="card-tabs"
-          default-value="clone"
-          pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;"
-          size="large"
-          style="margin: 0 -4px"
-      >
+      <n-tabs v-model:value="tab" animated class="card-tabs" default-value="clone"
+        pane-style="padding-left: 4px; padding-right: 4px; box-sizing: border-box;" size="large" style="margin: 0 -4px">
         <n-tab-pane name="create" tab="创建">
           <n-spin :show="creating">
             <n-form ref="form" :model="create_tunnel" :rules="rules">
@@ -25,78 +18,52 @@
 
                 <n-gi>
                   <n-form-item label="隧道名称" path="name">
-                    <n-input v-model:value="create_tunnel.name" @keydown.enter.prevent/>
+                    <n-input v-model:value="create_tunnel.name" @keydown.enter.prevent />
                   </n-form-item>
 
                   <n-form-item label="本机地址" path="local_address">
-                    <n-input v-model:value="create_tunnel.local_address"/>
+                    <n-input v-model:value="create_tunnel.local_address" />
                   </n-form-item>
 
                   <n-form-item v-if="create_tunnel.protocol === 'http' || create_tunnel.protocol === 'https'"
-                               label="绑定域名"
-                               path="custom_domain">
-                    <n-input v-model:value="create_tunnel.custom_domain" placeholder="输入一个存在的域名"/>
+                    label="绑定域名" path="custom_domain">
+                    <n-input v-model:value="create_tunnel.custom_domain" placeholder="输入一个存在的域名" />
                   </n-form-item>
 
-                  <n-form-item v-if="create_tunnel.protocol === 'tcp' || create_tunnel.protocol === 'udp'"
-                               label="远程端口"
-                               path="remote_port">
+                  <n-form-item v-if="create_tunnel.protocol === 'tcp' || create_tunnel.protocol === 'udp'" label="远程端口"
+                    path="remote_port">
                     <n-input-group>
                       <n-input v-model:value="create_tunnel.remote_port"
-                               :placeholder="'需要输入一个在 ' + port_range.min_port + ' 和 ' + port_range.max_port + ' 之间的端口'"/>
+                        :placeholder="'需要输入一个在 ' + port_range.min_port + ' 和 ' + port_range.max_port + ' 之间的端口'" />
                       <n-button ghost type="primary" @click="randomPort">
-                        {{ isMobile ? '随机' : '随机生成' }}
+                        {{ isMobile? '随机': '随机生成' }}
                       </n-button>
                     </n-input-group>
                   </n-form-item>
 
-                  <n-form-item v-if="create_tunnel.protocol === 'xtcp' || create_tunnel.protocol === 'stcp'"
-                               label="密钥"
-                               path="sk">
-                    <n-input v-model:value="create_tunnel.sk" placeholder="输入一个自定义的密钥"/>
+                  <n-form-item v-if="create_tunnel.protocol === 'xtcp' || create_tunnel.protocol === 'stcp'" label="密钥"
+                    path="sk">
+                    <n-input v-model:value="create_tunnel.sk" placeholder="输入一个自定义的密钥" />
                   </n-form-item>
 
                 </n-gi>
 
 
                 <n-gi>
-                  <n-form-item :label="'传输协议' + (isMobile ? '(可滑动)' : '')" class="overflow-x-auto"
-                               path="protocol">
+                  <n-form-item :label="'传输协议' + (isMobile ? '(可滑动)' : '')" class="overflow-x-auto" path="protocol">
                     <n-radio-group v-model:value="create_tunnel.protocol" name="protocol">
-                      <n-radio-button
-                          label="TCP"
-                          value="tcp"
-                      />
-                      <n-radio-button
-                          label="UDP"
-                          value="udp"
-                      />
-                      <n-radio-button
-                          label="HTTP"
-                          value="http"
-                      />
-                      <n-radio-button
-                          label="HTTPS"
-                          value="https"
-                      />
-                      <n-radio-button
-                          label="XTCP"
-                          value="xtcp"
-                      />
-                      <n-radio-button
-                          label="STCP"
-                          value="stcp"
-                      />
+                      <n-radio-button label="TCP" value="tcp" />
+                      <n-radio-button label="UDP" value="udp" />
+                      <n-radio-button label="HTTP" value="http" />
+                      <n-radio-button label="HTTPS" value="https" />
+                      <n-radio-button label="XTCP" value="xtcp" />
+                      <n-radio-button label="STCP" value="stcp" />
                     </n-radio-group>
                   </n-form-item>
 
                   <n-form-item label="选择服务器" path="server_id">
-                    <n-select
-                        v-if="filterServer().length > 0"
-                        v-model:value="create_tunnel.server_id"
-                        :options="filterServer()"
-                        placeholder="Select"
-                    />
+                    <n-select v-if="filterServer().length > 0" v-model:value="create_tunnel.server_id"
+                      :options="filterServer()" placeholder="Select" />
                     <n-text v-else>没有可用的服务器</n-text>
                   </n-form-item>
 
@@ -128,7 +95,7 @@
         <n-tab-pane name="clone" tab="克隆">
 
           <n-spin :show="creating">
-            <Tunnels :next="clone" :tunnels="tunnels"/>
+            <Tunnels :next="clone" :tunnels="tunnels" />
             <template #description>
               <n-p v-text="lyric()">
               </n-p>
@@ -141,15 +108,79 @@
       </n-tabs>
     </n-card>
 
+    <div class="mt-5">
+      <n-h1 prefix="bar">
+        <n-text type="primary">
+          常见问题
+        </n-text>
+      </n-h1>
+
+      <n-collapse>
+        <n-collapse-item title="计费方式是什么？">
+          <div>
+            流量计费。每隔一段时间会统计一次流量，然后根据流量计算价格。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="是否拥有免费流量？">
+          <div>
+            是，并且签到获取。
+            <br />
+            并且可能还会进行一些活动，获取更多的免费流量。
+            <br />
+            公益项目也可以申请免费流量 <a href="https://forum.laecloud.com/d/15-gong-yi-ge-ren-xiang-mu-mian-fei-liu-liang-shen-qing"
+              target="_blank">点击申请</a>。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="免费流量用完后会停止隧道吗？">
+          <div>
+            不会，超出的流量将会从余额中扣除，可能会造成欠费情况。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="限速吗？">
+          <div>
+            不限速。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="限制隧道数量吗？">
+          <div>
+            不限制。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="有 VIP 吗？">
+          <div>
+            没有。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="打算推出流量包吗？">
+          <div>
+            不打算，因为我们目前的方式不会造成流量浪费的情况。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="节点会稳定吗？">
+          <div>
+            收费后我们会有资金来维护节点。
+          </div>
+        </n-collapse-item>
+        <n-collapse-item title="价格如何？">
+          <div>
+            每个节点都会说明流量费用。
+            <br />
+            后期可能会调整价格。
+          </div>
+        </n-collapse-item>
+      </n-collapse>
+    </div>
   </div>
 
 </template>
 
 <script setup>
-import {computed, ref, watch} from 'vue'
+import { computed, ref, watch } from 'vue'
 import {
   NButton,
   NCard,
+  NCollapse,
+  NCollapseItem,
   NForm,
   NFormItem,
   NGi,
@@ -170,7 +201,7 @@ import {
 
 import http from "../../../plugins/http";
 
-import {useIsMobile} from "../../../utils/composables.js";
+import { useIsMobile } from "../../../utils/composables.js";
 import tunnelsStore from "../../../plugins/stores/tunnels";
 import Tunnels from "./components/Tunnels.vue";
 import lyric from "../../../plugins/lyric.js";
@@ -383,7 +414,7 @@ function handleCreate() {
       gateway.post('frp/hosts', create_tunnel.value).then(res => {
 
         tunnelsStore.commit('addTunnel', res.data)
-        message.success('隧道已创建，欢迎使用 ME Frp。')
+        message.success('隧道成功创建')
       }).finally(() => {
         creating.value = false
       })

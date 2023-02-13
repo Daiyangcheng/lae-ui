@@ -45,6 +45,16 @@ const routes = [
         component: () => import('../views/users/Login.vue'),
     },
     {
+        path: '/auth/login-locyan',
+        name: 'auth.login-locyan',
+        meta: {
+            auth: false,
+            title: '登录',
+            collapses: ['left'],
+        },
+        component: () => import('../views/users/LoCyan-Login.vue'),
+    },
+    {
         path: '/user',
         name: 'user',
         meta: {
@@ -157,7 +167,7 @@ const routes = [
                 // name: 'modules.tunnels',
                 component: () => import('../views/modules/tunnels/Base.vue'),
                 meta: {
-                    title: 'ME Frp',
+                    title: '联合映射',
                 },
                 children: [
                     {

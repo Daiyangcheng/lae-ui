@@ -45,9 +45,33 @@ const config = {
       },
     },
   },
+  locyan: {
+    api: 'https://api.locyanfrp.cn/',
+    auth: 'https://oauth.locyanfrp.cn/login',
+
+    // ws_gateway: 'wss://ws.gateway.laecloud.com',
+    // gateway: 'https://gateway.laecloud.com/',
+    // gateway: 'https://api.laecloud.com/api/modules',
+
+    // ws_host: 'socket.laecloud.com',
+    // ws_port: 443,
+    // ws_auth_endpoint: 'https://api.laecloud.com/broadcasting/auth',
+    // pusher_key: 'Q6SEgerhsgMVz',
+
+    avatar: 'https://cravatar.cn/avatar/',
+
+    status: 'https://api.laecloud.com/ngx_status',
+
+    // 目测是莱云的容器系统，联合映射不需要
+    // modules: {
+    //   gct: {
+    //     panel: 'https://ptero.laecloud.com',
+    //   },
+    // },
+  },
 }
 
-let current = config.dev;
+let current = config.prod;
 
 if (process.env.NODE_ENV === 'production') {
     current = config.prod;

@@ -1,13 +1,10 @@
 <template>
   <div>
     <div v-if="state === 'redirect'">
-      <Lottie :height="256"
-              :style="style"
-              name="Wave"
-      />
+      <Lottie :height="256" :style="style" name="Wave" />
 
       <div class="text-center">
-        <n-h1>欢迎！要一起加入莱云吗？</n-h1>
+        <n-h1>使用莱云账号登录联合映射</n-h1>
 
         <n-button class="text-center" type="info" @click="toLogin">
           现在登录！
@@ -16,16 +13,10 @@
 
     </div>
     <div v-else-if="state === 'logging'">
-      <Lottie :height="256"
-              :name="logo"
-              :style="style"
-      />
+      <Lottie :height="256" :name="logo" :style="style" />
     </div>
     <div v-else-if="state === 'error'">
-      <Lottie :height="256"
-              :style="style"
-              name="Ghost"
-      />
+      <Lottie :height="256" :style="style" name="Ghost" />
 
       <div class="text-center">
         <n-h1 class="mt-5">
@@ -45,17 +36,18 @@
     </p>
 
     <p v-if="state === 'redirect'" class="text-center mt-5">
-      莱云 iVampireSP.com 作品
-      <br/>
-      <a href="https://beian.miit.gov.cn/">苏ICP备2022042268号-1</a>
+      联合映射
+      <br />
+      由 LoCyan Team & MirrorEdge Network 联合运营
+      <br />
     </p>
 
   </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {NButton, NH1, NText} from 'naive-ui'
+import { ref } from 'vue'
+import { NButton, NH1, NText } from 'naive-ui'
 import http from '../../plugins/http'
 import router from '../../plugins/router'
 import api from '../../config/api'
@@ -82,23 +74,23 @@ const connect = () => {
   user.commit('updateToken', token.value)
 
   http
-      .get('/user')
-      .then((res) => {
-        setTimeout(() => {
-          user.commit('updateToken', token.value)
-          user.commit('updateUser', res.data)
+    .get('/user')
+    .then((res) => {
+      setTimeout(() => {
+        user.commit('updateToken', token.value)
+        user.commit('updateUser', res.data)
 
-          router.push('/')
-          location.href = '/'
-        }, 1000)
+        router.push('/')
+        location.href = '/'
+      }, 1000)
 
-      })
-      .catch(() => {
-        state.value = 'error'
+    })
+    .catch(() => {
+      state.value = 'error'
 
-        user.commit('updateToken', '')
-        user.commit('updateUser', {})
-      })
+      user.commit('updateToken', '')
+      user.commit('updateUser', {})
+    })
 
 }
 
@@ -117,9 +109,7 @@ function toLogin() {
 
   // protocol + domain + pathname
   const redirect = location.origin + location.pathname
-
-  window.location.href =
-      origin + '/?callback=' + encodeURIComponent(redirect)
+  window.location.href = origin + '/?callback=' + encodeURIComponent(redirect)
 }
 
 const logo = ref('Logo-dark')
