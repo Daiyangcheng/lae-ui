@@ -16,7 +16,8 @@ const request = {
         }
 
         config.headers['Accept'] = 'application/json'
-        config.headers['Authorization'] = 'Bearer ' + user.state.token
+        config.headers['Authorization'] = 'Bearer ' + user.getters.getToken
+        console.log(user.getters.getToken)
 
         loadingBar.start()
 

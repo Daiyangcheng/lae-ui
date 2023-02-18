@@ -1,9 +1,11 @@
 <template>
-  <HeaderVue v-if="user.state.token"/>
+  <HeaderVue v-if="user.state.token" />
 
   <n-layout
       :position="isMobile ? 'static' : 'absolute'"
-      :style="{ top: user.state.token ? isMobile ? '' : 'var(--header-height)' : '' }"
+      :style="{
+      top: user.state.token ? (isMobile ? '' : 'var(--header-height)') : '',
+    }"
       has-sider
   >
     <n-layout-sider
@@ -19,38 +21,41 @@
         @collapse="menuCollapsed.left = true"
         @expand="menuCollapsed.left = false"
     >
-      <Menu/>
+      <Menu />
     </n-layout-sider>
 
     <n-layout :native-scrollbar="false" content-style="padding: 24px">
+      <Maintenance v-if="user.state.token" class="mb-5" />
+
       <router-view v-slot="{ Component }">
         <transition mode="out-in" name="fade">
-          <component :is="Component"/>
+          <component :is="Component" />
         </transition>
       </router-view>
 
-      <n-back-top/>
+      <n-back-top />
 
       <div class="mt-2"></div>
-
     </n-layout>
   </n-layout>
 
   <div>
-    <Notifications/>
+    <Notifications />
   </div>
 </template>
 
 <script setup>
-import {NBackTop, NLayout, NLayoutSider} from 'naive-ui'
+import { NBackTop, NLayout, NLayoutSider } from 'naive-ui'
 
-import {useIsMobile, useIsTablet} from '../utils/composables.js'
+import { useIsMobile, useIsTablet } from '../utils/composables.js'
 import user from '../plugins/stores/user.js'
 
 import HeaderVue from './headers/Header.vue'
 import Menu from './Menu.vue'
+import Maintenance from './Maintenance.vue'
 
-import {menuCollapsed} from '../plugins/menuOptions.js'
+
+import { menuCollapsed } from '../plugins/menuOptions.js'
 import Notifications from './Notifications.vue'
 
 const isMobile = useIsMobile()

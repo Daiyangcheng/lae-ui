@@ -7,7 +7,7 @@
     <!--      <template #trigger>-->
     <n-badge :processing="taskProcessing" :type="taskStatus" :value="tasks.length"
              @click="showPopover = !showPopover">
-      <n-avatar :src="avatar" class="cursor-pointer" round size="large" @click.stop="show = true"/>
+      <n-avatar :src="avatar" class="cursor-pointer" round size="large" @click.stop="showDrawer"/>
     </n-badge>
     <!--      </template>-->
     <!--      <div>-->
@@ -67,7 +67,14 @@
           </router-link>
         </n-a>
       </div>
-
+      <div class="mt-5">
+        <n-h2 class="all-zero">退出登录</n-h2>
+        <n-a>
+          <router-link :to="{ name: 'auth.login' }" class="link">
+            退出登录
+          </router-link>
+        </n-a>
+      </div>
     </n-drawer-content>
   </n-drawer>
 
@@ -105,6 +112,10 @@ const taskProcessing = computed(() => taskStore.state.processing)
 
 taskStore.dispatch('fetch')
 
+function showDrawer() {
+  show.value = true
+  userStore.dispatch('fetch')
+}
 
 </script>
 
