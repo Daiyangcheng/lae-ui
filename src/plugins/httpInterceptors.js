@@ -95,10 +95,6 @@ const response = {
                             return h(error401)
                         },
                         positiveText: '重新登录',
-                        negativeText: '先这样',
-                        onPositiveClick: () => {
-                            router.push({name: 'auth.login'})
-                        },
                     })
 
                     http.state.isAlertedToken = true
